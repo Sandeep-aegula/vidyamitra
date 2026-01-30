@@ -2,9 +2,9 @@ import { FaUserCircle, FaMedal, FaChartLine, FaCalendarCheck, FaRocket, FaClipbo
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#7B6EF6]/80 to-[#f5f6fa] p-6">
+    <div className="min-h-screen bg-linear-to-b from-[#7B6EF6]/80 to-[#f5f6fa] p-6 text-gray-900">
       {/* Header */}
-      <div className="rounded-xl bg-gradient-to-r from-[#7B6EF6] to-[#8F7CF8] p-6 flex justify-between items-center shadow-lg">
+      <div className="rounded-xl bg-linear-to-r from-[#7B6EF6] to-[#8F7CF8] p-6 flex justify-between items-center shadow-lg">
         <div>
           <h1 className="text-3xl font-bold text-white mb-1 flex items-center gap-2">Welcome back, John! <span>👋</span></h1>
           <p className="text-white/90 text-lg">Ready to advance your career today?</p>
@@ -30,8 +30,8 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
         {/* Quick Actions */}
         <div className="col-span-2 flex flex-col gap-6">
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><FaRocket className="text-blue-400" /> Quick Actions</h2>
+          <div className="bg-white rounded-xl shadow p-6 text-gray-900">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-900"><FaRocket className="text-blue-400" /> Quick Actions</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <ActionCard icon={<FaUserEdit className="text-blue-400" />} title="Start Career Journey" desc="Begin with resume analysis and career planning" />
               <ActionCard icon={<FaClipboardCheck className="text-green-400" />} title="Skill Evaluation" desc="Assess your skills vs job requirements" />
@@ -41,8 +41,8 @@ export default function Dashboard() {
           </div>
 
           {/* Recommended for You */}
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><FaStar className="text-yellow-400" /> Recommended for You</h2>
+          <div className="bg-white rounded-xl shadow p-6 text-gray-900">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-900"><FaStar className="text-yellow-400" /> Recommended for You</h2>
             <div className="flex flex-col gap-6">
               <RecommendedCard title="Complete Your Profile" desc="Add your work experience to get better job matches" percent={75} buttonLabel="Complete Now" buttonColor="bg-blue-500" />
               <RecommendedCard title="Take Skill Assessment" desc="Evaluate your JavaScript skills to unlock new opportunities" percent={0} buttonLabel="Start Assessment" buttonColor="bg-green-500" />
@@ -53,8 +53,8 @@ export default function Dashboard() {
 
         {/* Right Side: Recent Activity & More Actions */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><FaCheckCircle className="text-green-400" /> Recent Activity</h2>
+          <div className="bg-white rounded-xl shadow p-6 text-gray-900">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-900"><FaCheckCircle className="text-green-400" /> Recent Activity</h2>
             <ul className="flex flex-col gap-3 text-sm">
               <li className="flex items-center gap-2"><FaClipboardCheck className="text-blue-400" /> Completed Resume Analysis <span className="ml-auto text-xs text-gray-400">2 hours ago</span></li>
               <li className="flex items-center gap-2"><FaBookOpen className="text-yellow-400" /> Started JavaScript Course <span className="ml-auto text-xs text-gray-400">1 day ago</span></li>
@@ -63,8 +63,8 @@ export default function Dashboard() {
               <li className="flex items-center gap-2"><FaQuestionCircle className="text-purple-400" /> Scored 92% in React Quiz <span className="ml-auto text-xs text-gray-400">1 week ago</span></li>
             </ul>
           </div>
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><FaTasks className="text-pink-400" /> More Actions</h2>
+          <div className="bg-white rounded-xl shadow p-6 text-gray-900">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-900"><FaTasks className="text-pink-400" /> More Actions</h2>
             <div className="flex flex-col gap-3">
               <ActionLink icon={<FaComments className="text-pink-400" />} label="Mock Interview" />
               <ActionLink icon={<FaSuitcase className="text-green-400" />} label="Job Matching" />

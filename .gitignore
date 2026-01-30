@@ -18,3 +18,9 @@ Thumbs.db
 # Environment files
 .env
 .env.*
+.venv/
+venv/
+ENV/
+
+# Legacy backup
+backend/legacy_backup/
