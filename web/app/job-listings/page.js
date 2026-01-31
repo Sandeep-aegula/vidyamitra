@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Search, MapPin, Briefcase, Star, ExternalLink,
-    Linkedin, Globe, AlertCircle, Loader2
+    Linkedin, Globe, AlertCircle, Loader2, X
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -69,6 +69,8 @@ export default function JobListingsPage() {
             setLoading(false);
         }
     };
+
+
 
     // Auto-search on mount
     useEffect(() => {
@@ -147,27 +149,7 @@ export default function JobListingsPage() {
                     </button>
                 </div>
 
-                {/* API / 403 notice – show when error mentions 403 or JSearch */}
-                {error && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
-                        <AlertCircle className="text-amber-600 flex-shrink-0 mt-0.5" size={20} />
-                        <div className="flex-1">
-                            <h3 className="font-bold text-amber-900">
-                                {error.includes('403') || error.includes('JSearch') ? 'Job API not configured' : 'Notice'}
-                            </h3>
-                            <p className="text-sm text-amber-800 mt-1">{error}</p>
-                            {(error.includes('403') || error.includes('JSearch') || error.includes('API key')) && (
-                                <p className="text-xs text-amber-700 mt-2">
-                                    Subscribe (free tier available) and get your key:{" "}
-                                    <a href="https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch" target="_blank" rel="noopener noreferrer" className="underline font-medium">
-                                        RapidAPI JSearch
-                                    </a>
-                                    {" "}→ then add <code className="bg-amber-100 px-1 rounded">JSEARCH_API_KEY</code> to <code className="bg-amber-100 px-1 rounded">backend/.env</code>
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                )}
+
 
                 {/* Results Header */}
                 {hasSearched && !loading && (

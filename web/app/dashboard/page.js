@@ -1,4 +1,5 @@
 import { FaUserCircle, FaMedal, FaChartLine, FaCalendarCheck, FaRocket, FaClipboardCheck, FaBookOpen, FaQuestionCircle, FaStar, FaCheckCircle, FaUserEdit, FaTasks, FaComments, FaSuitcase } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Dashboard() {
   return (
@@ -6,16 +7,10 @@ export default function Dashboard() {
       {/* Header */}
       <div className="rounded-xl bg-linear-to-r from-[#F2DFCE] to-[#D7E9E9] border border-[#E8D9CB] p-6 flex justify-between items-center shadow-[0_10px_40px_rgba(0,0,0,0.03)]">
         <div>
-          <h1 className="text-3xl font-bold text-[#4A4E69] mb-1 flex items-center gap-2">Welcome back, Sandeep! <span>👋</span></h1>
+          <h1 className="text-3xl font-bold text-[#4A4E69] mb-1 flex items-center gap-2">Welcome to VidyāMitra! </h1>
           <p className="text-[#4A4E69]/80 text-lg">Ready to advance your career today?</p>
         </div>
-        <div className="flex items-center gap-3 bg-white/40 border border-white/60 rounded-lg px-5 py-3 shadow-xs">
-          <FaUserCircle className="text-3xl text-[#4A4E69]" />
-          <div>
-            <div className="font-semibold text-[#4A4E69]">Sandeep Aegula</div>
-            <div className="text-xs opacity-70 text-[#4A4E69]">sandeepaegula@gmail.com</div>
-          </div>
-        </div>
+        
       </div>
 
       {/* Stats */}
@@ -66,8 +61,8 @@ export default function Dashboard() {
           <div className="bg-[#FCFBF7] rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#E9E1D6] p-6 text-[#4A4E69]">
             <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-[#4A4E69]"><FaTasks className="text-[#E17055]" /> More Actions</h2>
             <div className="flex flex-col gap-3">
-              <ActionLink icon={<FaComments className="text-[#E17055]" />} label="Mock Interview" />
-              <ActionLink icon={<FaSuitcase className="text-[#A3C4BC]" />} label="Job Matching" />
+              <ActionLink icon={<FaComments className="text-[#E17055]" />} label="Mock Interview" href="/interview" />
+              <ActionLink icon={<FaSuitcase className="text-[#A3C4BC]" />} label="Job Matching" href="/job-listings" />
             </div>
           </div>
         </div>
@@ -114,10 +109,10 @@ function RecommendedCard({ title, desc, percent, buttonLabel, buttonColor, progr
   );
 }
 
-function ActionLink({ icon, label }) {
+function ActionLink({ icon, label, href }) {
   return (
-    <button className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white hover:bg-[#F9F7F2] text-sm font-semibold border border-[#F2EDE4] shadow-[0_2px_8px_rgba(0,0,0,0.01)] text-[#4A4E69] transition-all">
+    <Link href={href || "#"} className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white hover:bg-[#F9F7F2] text-sm font-semibold border border-[#F2EDE4] shadow-[0_2px_8px_rgba(0,0,0,0.01)] text-[#4A4E69] transition-all">
       {icon} {label}
-    </button>
+    </Link>
   );
 }
