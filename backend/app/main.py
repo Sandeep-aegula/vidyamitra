@@ -14,8 +14,9 @@ app = FastAPI(title="VidyāMitra API", version="1.0.0")
 
 # CORS Configuration
 origins = [
-    "http://localhost:5173", # React Frontend
+    "http://localhost:5173",
     "http://localhost:3000",
+    "https://vidyamitra-git-main-aegula-sandeeps-projects.vercel.app",
     "*"
 ]
 
@@ -25,6 +26,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Include Routers
