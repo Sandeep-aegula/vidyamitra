@@ -17,6 +17,19 @@ const ROLE_ID_TO_TITLE = {
 };
 
 export default function PlanPage() {
+  return (
+    <React.Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+        <p className="text-gray-500 font-medium">Loading your plan...</p>
+      </div>
+    }>
+      <PlanContent />
+    </React.Suspense>
+  );
+}
+
+function PlanContent() {
   const searchParams = useSearchParams();
   const [weeks, setWeeks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -40,7 +53,8 @@ export default function PlanPage() {
           missing_skills: evaluation.recommendations || [] // Using recommendations as a proxy for gaps
         };
 
-        const response = await fetch(`http://localhost:8000/plan/?user_id=${userId}`, {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiUrl}/plan/?user_id=${userId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(requestBody)
@@ -62,7 +76,7 @@ export default function PlanPage() {
     };
 
     fetchPlan();
-  }, []);
+  }, [searchParams, userId]);
 
   const handleCompleteWeek = async (weekNum) => {
     // In a real app, we'd call the PATCH /complete/{planId} here

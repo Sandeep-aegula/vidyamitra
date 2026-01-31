@@ -51,7 +51,8 @@ export default function JobListingsPage() {
                 params.append('employment_type', typeMap[filters.type]);
             }
 
-            const response = await fetch(`http://localhost:8000/jobs/search?${params}`);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${apiUrl}/jobs/search?${params}`);
             const data = await response.json();
 
             if (data.success) {

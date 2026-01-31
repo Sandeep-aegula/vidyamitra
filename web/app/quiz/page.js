@@ -19,7 +19,8 @@ export default function QuizPage() {
   const handleStartQuiz = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8000/quiz/`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/quiz/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config)
@@ -69,7 +70,8 @@ export default function QuizPage() {
         total_questions: questions.length
       };
 
-      await fetch(`http://localhost:8000/quiz/submit`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      await fetch(`${apiUrl}/quiz/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
