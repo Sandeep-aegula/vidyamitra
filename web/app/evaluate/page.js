@@ -3,7 +3,7 @@
 import React from 'react';
 import {
   User, Briefcase, Code, CheckCircle, AlertCircle,
-  TrendingUp, ArrowRight, Sparkles
+  TrendingUp, ArrowRight, Sparkles, BookOpen
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -228,6 +228,46 @@ export default function EvaluatePage() {
           </motion.div>
         </div>
 
+        {/* Top 4 Learning Topics Card */}
+        {analysis.recommendations.length >= 4 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border border-indigo-100 p-6"
+          >
+            <div className="flex items-center gap-2 mb-4 text-indigo-700 font-semibold text-lg">
+              <BookOpen className="text-indigo-600" /> Your Personalized Learning Path
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              Based on your evaluation, we've identified the top 4 skills you should focus on. Create a personalized learning plan to master these topics!
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              {analysis.recommendations.slice(0, 4).map((topic, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white rounded-xl p-3 border border-indigo-100 flex items-center gap-3"
+                >
+                  <div className="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">
+                    {idx + 1}
+                  </div>
+                  <span className="text-gray-800 font-medium text-sm">{topic}</span>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                const topTopics = analysis.recommendations.slice(0, 4);
+                localStorage.setItem('learningTopics', JSON.stringify(topTopics));
+                localStorage.setItem('targetRole', localStorage.getItem('targetRole') || 'Software Engineer');
+                window.location.href = '/plan';
+              }}
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl text-base font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+            >
+              <Sparkles size={20} /> Create My Learning Plan
+            </button>
+          </motion.div>
+        )}
         {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

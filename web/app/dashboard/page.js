@@ -12,8 +12,8 @@ export default function Dashboard() {
         <div className="flex items-center gap-3 bg-white/10 rounded-lg px-5 py-3">
           <FaUserCircle className="text-3xl text-white" />
           <div>
-            <div className="font-semibold text-white">John Doe</div>
-            <div className="text-xs opacity-80 text-white">j123@gmail.com</div>
+            <div className="font-semibold text-white">Sandeep Aegula</div>
+            <div className="text-xs opacity-80 text-white">sandeepaegula@gmail.com</div>
           </div>
         </div>
       </div>

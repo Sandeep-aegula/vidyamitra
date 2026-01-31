@@ -74,6 +74,12 @@ export default function JobsPage() {
           <p className="text-gray-500 max-w-2xl mx-auto text-lg">
             Choose the specific role you're targeting. We'll analyze your eligibility and create a personalized plan to help you achieve your career goals.
           </p>
+          <Link
+            href="/job-listings"
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition-colors"
+          >
+            <Search size={18} /> Browse real job listings
+          </Link>
         </div>
 
         {/* Search Bar */}

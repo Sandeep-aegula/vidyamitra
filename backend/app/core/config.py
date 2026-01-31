@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     PEXELS_API_KEY: Optional[str] = None
     NEWS_API_KEY: Optional[str] = None
     EXCHANGE_API_KEY: Optional[str] = None
+    JSEARCH_API_KEY: Optional[str] = None  # RapidAPI JSearch for job listings
 
     # Database - Made optional
     SUPABASE_URL: Optional[str] = None

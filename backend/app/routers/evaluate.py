@@ -44,13 +44,14 @@ def evaluate_skills(request: EvaluationRequest, user_id: Optional[str] = Query(N
     Tasks:
     1. Calculate a match_score (0-100) based on how well the candidate's skills align with the role. Be fair but encouraging.
     2. Identify matched_skills: list of skills from the resume that are directly or semantically relevant to the job.
-    3. Identify missing_skills: list of 3-5 critical skills/tools mentioned in the job description that are missing from the resume.
+    3. Identify missing_skills: list of EXACTLY 4 critical skills/tools mentioned in the job description that are missing from the resume. 
+       Prioritize these by importance for the role. If fewer than 4 are missing, suggest related skills that would strengthen the profile.
 
     Return ONLY a JSON object with this structure:
     {{
       "match_score": integer,
       "matched_skills": [string],
-      "missing_skills": [string]
+      "missing_skills": [exactly 4 strings, ordered by importance]
     }}
     
     Return ONLY valid JSON.
@@ -72,6 +73,17 @@ def evaluate_skills(request: EvaluationRequest, user_id: Optional[str] = Query(N
         matched_skills = eval_results.get("matched_skills", [])
         missing_skills = eval_results.get("missing_skills", [])
         
+        # Ensure exactly 4 missing skills
+        if len(missing_skills) > 4:
+            missing_skills = missing_skills[:4]
+        elif len(missing_skills) < 4:
+            # Pad with generic suggestions if needed
+            generic_skills = ["Problem Solving", "Communication", "Time Management", "Teamwork"]
+            while len(missing_skills) < 4 and generic_skills:
+                skill = generic_skills.pop(0)
+                if skill not in missing_skills:
+                    missing_skills.append(skill)
+        
     except Exception as e:
         print(f"Evaluation AI Error: {e}")
         # Improved Fallback: fuzzy/substring matching
@@ -84,7 +96,7 @@ def evaluate_skills(request: EvaluationRequest, user_id: Optional[str] = Query(N
         # Base score on matches, but at least 20 if they have skills
         score = (len(matched_skills) / len(request.resume_skills)) * 100 if request.resume_skills else 0
         score = max(score, 20) if request.resume_skills else 0
-        missing_skills = ["AI evaluation service is temporarily down. Comparing keywords instead."]
+        missing_skills = ["Communication", "Problem Solving", "Technical Documentation", "Collaboration"]
 
     score = round(score, 2)
     
@@ -102,12 +114,13 @@ def evaluate_skills(request: EvaluationRequest, user_id: Optional[str] = Query(N
         except Exception as e:
             print(f"Error saving evaluation: {e}")
 
-    # Return comprehensive result as requested by user
+    # Return comprehensive result with top 4 topics for learning plan
     return {
         "score": score,
         "match_score": score,
         "matched_skills": matched_skills,
         "missing_skills": missing_skills,
+        "top_topics": missing_skills[:4],  # Explicitly provide top 4 for learning plan
         "personal_info": request.personal_info,
         "job_role": request.job_role
     }

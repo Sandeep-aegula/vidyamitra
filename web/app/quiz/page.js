@@ -12,6 +12,9 @@ export default function QuizPage() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userId] = useState("550e8400-e29b-41d4-a716-446655440000"); // Mock valid UUID
+  const [config, setConfig] = useState({ topic: '', difficulty: 'Medium', count: 5 });
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState({});
 
   const handleStartQuiz = async () => {
     setLoading(true);

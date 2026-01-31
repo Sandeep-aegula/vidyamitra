@@ -12,3 +12,4 @@ passlib[bcrypt]
 google-generativeai
 PyPDF2==3.0.1
 email-validator
+reportlab==4.4.9

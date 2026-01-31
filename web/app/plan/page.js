@@ -1,13 +1,23 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   Calendar, BookOpen, PlayCircle, CheckCircle, Clock,
-  ExternalLink, Video, ChevronRight, Award
+  ExternalLink, Video, ChevronRight, Award, ArrowRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const ROLE_ID_TO_TITLE = {
+  'software-engineer': 'Software Engineer',
+  'data-scientist': 'Data Scientist',
+  'devops-engineer': 'DevOps Engineer',
+  'product-manager': 'Product Manager'
+};
+
 export default function PlanPage() {
+  const searchParams = useSearchParams();
   const [weeks, setWeeks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [planId, setPlanId] = React.useState(null);
@@ -17,7 +27,11 @@ export default function PlanPage() {
     const fetchPlan = async () => {
       try {
         const evaluation = JSON.parse(localStorage.getItem('evaluationResults') || '{}');
-        const role = localStorage.getItem('targetRole') || 'Software Engineer';
+        const roleFromUrl = searchParams.get('role');
+        const role = roleFromUrl
+          ? (ROLE_ID_TO_TITLE[roleFromUrl] || roleFromUrl.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()))
+          : (localStorage.getItem('targetRole') || 'Software Engineer');
+        if (role) localStorage.setItem('targetRole', role);
 
         // Prepare request
         const requestBody = {
