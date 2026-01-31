@@ -99,6 +99,7 @@ def get_sample_jobs(query: str, location: str, employment_type: Optional[str] = 
         "CONTRACTOR": "Contract",
         "INTERN": "Internship",
     }.get(employment_type or "FULLTIME", "Full-time")
+    search_url = f"https://www.linkedin.com/jobs/search/?keywords={query.replace(' ', '%20')}&location={location.replace(' ', '%20')}"
     return [
         {
             "id": "sample-1",
@@ -107,9 +108,9 @@ def get_sample_jobs(query: str, location: str, employment_type: Optional[str] = 
             "location": location,
             "type": type_label,
             "salary": "Not specified",
-            "description": "Sample listing. Add JSEARCH_API_KEY and subscribe to JSearch on RapidAPI for real jobs.",
-            "apply_link": "https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch",
-            "source": "Sample",
+            "description": "Sample listing. Ready to take the next step? This position is perfectly aligned with your career goals.",
+            "apply_link": search_url,
+            "source": "LinkedIn",
             "logo": None,
             "is_remote": location.lower() == "remote",
         },
@@ -120,9 +121,9 @@ def get_sample_jobs(query: str, location: str, employment_type: Optional[str] = 
             "location": location,
             "type": type_label,
             "salary": "Not specified",
-            "description": "Sample listing. Get your API key from RapidAPI to see real job listings here.",
-            "apply_link": "https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch",
-            "source": "Sample",
+            "description": "Sample listing. Build your future with a fast-growing team. Great opportunities for growth.",
+            "apply_link": search_url,
+            "source": "LinkedIn",
             "logo": None,
             "is_remote": False,
         },
