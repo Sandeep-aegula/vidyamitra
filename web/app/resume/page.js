@@ -101,8 +101,10 @@ export default function ResumePage() {
         },
         experience: {
           total: `${resumeData.experience.length} position(s)`,
-          found: resumeData.skills.length > 0 ? resumeData.skills.slice(0, 5) : ["No skills detected"]
+          found: resumeData.experience.map(exp => exp.role || exp.company).filter(Boolean)
         },
+        education: resumeData.education,
+        experienceDetails: resumeData.experience,
         skills: data.matched_skills && data.matched_skills.length > 0 ? data.matched_skills : (resumeData.skills || []),
         strengths: data.matched_skills && data.matched_skills.length > 0 ? data.matched_skills : ["Analyzing background..."],
         recommendations: data.missing_skills && data.missing_skills.length > 0 ? data.missing_skills : ["Keep up the good work!"],

@@ -9,17 +9,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function EvaluatePage() {
-  // Mock Data for Resume Analysis
-  // State to hold analysis data
   const [analysis, setAnalysis] = React.useState(null);
 
   React.useEffect(() => {
-    // Try to get data from localStorage
     try {
       const savedData = localStorage.getItem('evaluationResults');
       if (savedData) {
         const parsed = JSON.parse(savedData);
-        // Ensure structure is correct
         setAnalysis({
           score: parsed.score || 0,
           status: parsed.status || "Analysis Complete",
@@ -33,12 +29,13 @@ export default function EvaluatePage() {
             total: parsed.experience?.total || "0 position(s)",
             found: parsed.experience?.found || []
           },
+          experienceDetails: parsed.experienceDetails || [],
+          education: parsed.education || [],
           skills: parsed.skills || [],
           strengths: parsed.strengths || ["Analyzing your background..."],
           recommendations: parsed.recommendations || ["Keep improving your profile!"]
         });
       } else {
-        // Fallback or data not yet ready
         setAnalysis({
           score: 0,
           status: "Preparing analysis...",
@@ -72,7 +69,6 @@ export default function EvaluatePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
-
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -87,7 +83,6 @@ export default function EvaluatePage() {
       </motion.div>
 
       <div className="max-w-5xl w-full space-y-6">
-
         {/* Score Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -142,7 +137,7 @@ export default function EvaluatePage() {
             className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
           >
             <div className="flex items-center gap-2 mb-6 text-gray-800 font-semibold text-lg">
-              <Briefcase className="text-indigo-500" /> Experience Summary
+              <Briefcase className="text-indigo-500" /> Experience Overview
             </div>
             <div className="space-y-4 text-sm">
               <div>
@@ -150,10 +145,10 @@ export default function EvaluatePage() {
                 <span className="text-gray-900 font-semibold">{analysis.experience.total}</span>
               </div>
               <div>
-                <span className="text-gray-500 font-medium block mb-2">Positions/Keywords Found:</span>
+                <span className="text-gray-500 font-medium block mb-2">Key Positions:</span>
                 <div className="flex flex-wrap gap-2">
                   {analysis.experience.found.map((item, idx) => (
-                    <span key={idx} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
+                    <span key={idx} className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-semibold">
                       {item}
                     </span>
                   ))}
@@ -163,11 +158,64 @@ export default function EvaluatePage() {
           </motion.div>
         </div>
 
+        {/* Detailed History */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Detailed Experience */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
+          >
+            <div className="flex items-center gap-2 mb-4 text-gray-800 font-semibold text-lg">
+              <Briefcase className="text-blue-600" /> Work History
+            </div>
+            <div className="space-y-4">
+              {analysis.experienceDetails?.map((exp, idx) => (
+                <div key={idx} className="border-l-2 border-blue-100 pl-4 py-1">
+                  <div className="font-bold text-gray-900">{exp.role || exp.title}</div>
+                  <div className="text-sm text-indigo-600 font-medium">{exp.company}</div>
+                  <div className="text-xs text-gray-400">{exp.start} - {exp.end}</div>
+                  {exp.description && <p className="text-xs text-gray-600 mt-1 line-clamp-2">{exp.description}</p>}
+                </div>
+              ))}
+              {(!analysis.experienceDetails || analysis.experienceDetails.length === 0) && (
+                <p className="text-sm text-gray-400 italic">No detailed work history found.</p>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Detailed Education */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
+          >
+            <div className="flex items-center gap-2 mb-4 text-gray-800 font-semibold text-lg">
+              <BookOpen className="text-purple-600" /> Education
+            </div>
+            <div className="space-y-4">
+              {analysis.education?.map((edu, idx) => (
+                <div key={idx} className="border-l-2 border-purple-100 pl-4 py-1">
+                  <div className="font-bold text-gray-900">{edu.degree}</div>
+                  <div className="text-sm text-purple-600 font-medium">{edu.school || edu.university}</div>
+                  <div className="text-xs text-gray-400">{edu.year || edu.date}</div>
+                  {edu.field && <div className="text-xs text-gray-500">{edu.field}</div>}
+                </div>
+              ))}
+              {(!analysis.education || analysis.education.length === 0) && (
+                <p className="text-sm text-gray-400 italic">No education details found.</p>
+              )}
+            </div>
+          </motion.div>
+        </div>
+
         {/* Skills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.4 }}
           className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
         >
           <div className="flex items-center gap-2 mb-6 text-gray-800 font-semibold text-lg">
@@ -187,11 +235,10 @@ export default function EvaluatePage() {
 
         {/* Strengths & Recommendations */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Strengths */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.5 }}
             className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
           >
             <div className="flex items-center gap-2 mb-6 text-gray-800 font-semibold text-lg">
@@ -207,11 +254,10 @@ export default function EvaluatePage() {
             </ul>
           </motion.div>
 
-          {/* Recommendations */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.5 }}
             className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6"
           >
             <div className="flex items-center gap-2 mb-6 text-gray-800 font-semibold text-lg">
@@ -228,26 +274,23 @@ export default function EvaluatePage() {
           </motion.div>
         </div>
 
-        {/* Top 4 Learning Topics Card */}
+        {/* Learning Topics Card */}
         {analysis.recommendations.length >= 4 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.6 }}
             className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border border-indigo-100 p-6"
           >
             <div className="flex items-center gap-2 mb-4 text-indigo-700 font-semibold text-lg">
-              <BookOpen className="text-indigo-600" /> Your Personalized Learning Path
+              <BookOpen className="text-indigo-600" /> Personalized Learning Path
             </div>
             <p className="text-gray-600 text-sm mb-4">
-              Based on your evaluation, we've identified the top 4 skills you should focus on. Create a personalized learning plan to master these topics!
+              Create a personalized learning plan to bridge your skill gaps!
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
               {analysis.recommendations.slice(0, 4).map((topic, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-xl p-3 border border-indigo-100 flex items-center gap-3"
-                >
+                <div key={idx} className="bg-white rounded-xl p-3 border border-indigo-100 flex items-center gap-3">
                   <div className="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">
                     {idx + 1}
                   </div>
@@ -259,7 +302,6 @@ export default function EvaluatePage() {
               onClick={() => {
                 const topTopics = analysis.recommendations.slice(0, 4);
                 localStorage.setItem('learningTopics', JSON.stringify(topTopics));
-                localStorage.setItem('targetRole', localStorage.getItem('targetRole') || 'Software Engineer');
                 window.location.href = '/plan';
               }}
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl text-base font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
@@ -268,11 +310,12 @@ export default function EvaluatePage() {
             </button>
           </motion.div>
         )}
+
         {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.7 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 mb-20"
         >
           <Link href="/resume">
@@ -287,7 +330,6 @@ export default function EvaluatePage() {
             </button>
           </Link>
         </motion.div>
-
       </div>
     </div>
   );

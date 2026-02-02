@@ -1,16 +1,27 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { FaUserCircle, FaMedal, FaChartLine, FaCalendarCheck, FaRocket, FaClipboardCheck, FaBookOpen, FaQuestionCircle, FaStar, FaCheckCircle, FaUserEdit, FaTasks, FaComments, FaSuitcase } from "react-icons/fa";
 import Link from "next/link";
 
 export default function Dashboard() {
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const name = localStorage.getItem('user_name');
+    if (name) setUserName(name);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#F9F7F2] p-6 text-[#4A4E69]">
       {/* Header */}
       <div className="rounded-xl bg-linear-to-r from-[#F2DFCE] to-[#D7E9E9] border border-[#E8D9CB] p-6 flex justify-between items-center shadow-[0_10px_40px_rgba(0,0,0,0.03)]">
         <div>
-          <h1 className="text-3xl font-bold text-[#4A4E69] mb-1 flex items-center gap-2">Welcome to VidyāMitra! </h1>
+          <h1 className="text-3xl font-bold text-[#4A4E69] mb-1 flex items-center gap-2">
+            Welcome{userName ? `, ${userName}` : " to VidyāMitra"}! <span>👋</span>
+          </h1>
           <p className="text-[#4A4E69]/80 text-lg">Ready to advance your career today?</p>
         </div>
-        
       </div>
 
       {/* Stats */}
